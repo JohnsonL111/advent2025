@@ -6,6 +6,7 @@ class Dial:
         with open(file, 'r') as f:
             self.data = f.read()
 
+    # 5 // 100 = 
     def findPassword(self):
         for line in self.data.split('\n'):
             # skip empty lines
@@ -14,15 +15,23 @@ class Dial:
             # valid line
             direction = int(line[1:]) 
             if line[0] == 'R':
+                old = self.num
                 self.num += direction
+                new = self.num
+                self.password += (new // 100) - (old // 100)
+
                 self.num %= 100
             else:
+                old = self.num
                 self.num -= direction
+                new = self.num
+                self.password += ((old-1) // 100) - ((new-1)// 100)
+
                 self.num %= 100
 
             # check password
-            if self.num == 0:
-                self.password += 1
+            # if self.num == 0:
+            #     self.password += 1
 
         print(f'password is {self.password}')
         return self.password
